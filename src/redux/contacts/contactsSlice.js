@@ -5,7 +5,11 @@ const initialState = {};
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  reducers: {},
+  reducers: {
+    addContact: (state, action) => {
+      console.log(state);
+    },
+  },
 });
 
-export const contactsReduсers = contactsSlice.reducer;
+export const contactsReducer = contactsSlice.reducer;

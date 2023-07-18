@@ -5,7 +5,11 @@ const initialState = {};
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    loginSuccess: (state, action) => {
+      console.log(state);
+    },
+  },
 });
 
-export const authReduсers = authSlice.reducer;
+export const authReducer = authSlice.reducer;
