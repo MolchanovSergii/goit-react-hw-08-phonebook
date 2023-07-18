@@ -1,9 +1,13 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
-import { Error, FormWrapper } from './LoginPageStyled';
+import { Error, FormWrapper } from './RegistrationPageStyled';
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
+  username: yup
+    .string()
+    .min(2, 'Username is too short')
+    .required('Username is required'),
   email: yup.string().required().email(),
   password: yup
     .string()
@@ -13,11 +17,12 @@ const schema = yup.object().shape({
 });
 
 const initialValues = {
-  email: '',
+  login: '',
   password: '',
+  username: '',
 };
 
-const LoginPage = () => {
+const RegistrationPage = () => {
   const handleSubmit = (values, actions) => {
     console.log(values);
     console.log(actions);
@@ -32,10 +37,16 @@ const LoginPage = () => {
     >
       <Form>
         <FormWrapper>
+          <label htmlFor="username">
+            Username
+            <Field type="text" name="username" />
+            <Error name="username" component="div" />
+          </label>
+
           <label htmlFor="login">
-            Email
-            <Field type="email" name="email" />
-            <Error name="email" component="div" />
+            Login
+            <Field type="email" name="login" />
+            <Error name="login" component="div" />
           </label>
           <label htmlFor="password">
             Password
@@ -49,4 +60,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegistrationPage;
