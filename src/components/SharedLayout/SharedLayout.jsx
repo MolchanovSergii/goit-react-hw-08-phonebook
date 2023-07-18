@@ -2,16 +2,16 @@ import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import Loader from 'components/Loader/Loader';
-import { Container, Header, Link, Navigation } from './SharedLayoutStyled';
+import HeadNavigation from 'components/HeadNavigation/HeadNavigation';
+import { Container, Header } from './SharedLayoutStyled';
+import AuthNavigation from 'components/AuthNavigation/AuthNavigation';
 
 const SharedLayout = () => {
   return (
     <Container>
       <Header>
-        <Navigation>
-          <Link to="/">Home</Link>
-          <Link to="/contacts">Contacts</Link>
-        </Navigation>
+        <HeadNavigation />
+        <AuthNavigation />
       </Header>
       <Suspense fallback={<Loader />}>
         <Outlet />
