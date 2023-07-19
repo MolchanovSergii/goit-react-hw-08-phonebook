@@ -1,41 +1,36 @@
-// import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { addContact } from 'redux/contacts/operations';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contacts/contactsOperations';
+import contactsSelector from 'redux/contacts/contactsSelectors';
 
 import { StyledForm, StyledInput, StyledButton } from './ContactFormStyled';
 
 const ContactForms = () => {
-  // const contactsList = useSelector(state => state.contacts.items);
-
-  // const dispatch = useDispatch();
-
   const uniqueId = nanoid();
+
+  const contactsList = useSelector(contactsSelector.selectContacts);
+
+  const dispatch = useDispatch();
 
   const handleSubmitForm = event => {
     event.preventDefault();
-    console.log(event.target.name.value);
-    console.log(event.target.number.value);
+    const name = event.target.name.value;
+    const number = event.target.number.value;
 
-    // const isDuplicateName = contactsList.some(contacts =>
-    //   contacts.name.toLowerCase().includes(name.toLowerCase())
-    // );
+    const isDuplicateName = contactsList.some(contacts =>
+      contacts.name.toLowerCase().includes(name.toLowerCase())
+    );
 
-    // if (isDuplicateName) {
-    //   alert(`${name} is alredy to contacts`);
-    //   return;
-    // }
+    if (isDuplicateName) {
+      alert(`${name} is alredy to contacts`);
+      return;
+    }
 
-    // const contact = { name, number };
-    // form.reset();
+    const contact = { name, number };
+    event.target.reset();
 
-    // dispatch(addContact(contact));
+    dispatch(addContact(contact));
   };
-
-  // const reset = () => {
-  //   setName('');
-  //   setNumber('');
-  // };
 
   return (
     <StyledForm onSubmit={handleSubmitForm}>

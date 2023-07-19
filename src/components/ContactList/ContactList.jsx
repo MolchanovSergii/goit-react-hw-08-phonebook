@@ -1,42 +1,37 @@
-import React, { useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { deleteContact } from 'redux/contacts/operations';
-// import { fetchAllContacts } from 'redux/contacts/operations';
-// import { selectContacts, selectFilter } from 'redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import contactsSelector from 'redux/contacts/contactsSelectors';
+import { deleteContact } from 'redux/contacts/contactsOperations';
 
-import { StyledButton } from '../ContactForms/ContactForms.styled';
 import Loader from 'components/Loader/Loader';
-import { StyledContactList, StyledContactItem } from './ContactList.styled';
+import { StyledButton } from '../ContactForm/ContactFormStyled';
+import { StyledContactList, StyledContactItem } from './ContactListStyled';
 
 const ContactList = () => {
-  // const contactsList = useSelector(selectContacts);
-  // const { items, isLoading, error } = contactsList;
+  const contactsList = useSelector(contactsSelector.selectContactsState);
 
-  // const filter = useSelector(selectFilter);
-  // const dispatch = useDispatch();
+  const { isLoading, error, items } = contactsList;
 
-  // const visibleContacts = items.filter(contact =>
-  //   contact.name.toLowerCase().includes(filter.toLowerCase())
-  // );
+  const filter = useSelector(state => state.filter);
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetchAllContacts());
-  // }, [dispatch]);
+  const visibleContacts = items.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <>
-      {/* {isLoading && <Loader />}
+      {isLoading && <Loader />}
       {error && <p>{error}</p>}
       <StyledContactList>
-        {visibleContacts.map(({ id, name, phone }) => (
+        {visibleContacts.map(({ id, name, number }) => (
           <StyledContactItem key={id}>
-            {name} : {phone}
+            {name} : {number}
             <StyledButton onClick={() => dispatch(deleteContact(id))}>
               Delete
             </StyledButton>
           </StyledContactItem>
         ))}
-      </StyledContactList> */}
+      </StyledContactList>
     </>
   );
 };
