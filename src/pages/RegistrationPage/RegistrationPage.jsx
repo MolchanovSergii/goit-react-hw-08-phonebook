@@ -2,9 +2,11 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Error, FormWrapper } from './RegistrationPageStyled';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { register } from 'redux/auth/authOperations';
 
 const schema = yup.object().shape({
-  username: yup
+  name: yup
     .string()
     .min(2, 'Username is too short')
     .required('Username is required'),
@@ -12,20 +14,21 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required()
-    .min(2, 'Password is too short')
-    .max(8, 'Password is too long'),
+    .min(7, 'Password is too short')
+    .max(16, 'Password is too long'),
 });
 
 const initialValues = {
-  login: '',
+  name: '',
+  email: '',
   password: '',
-  username: '',
 };
 
 const RegistrationPage = () => {
+  const dispatch = useDispatch();
+
   const handleSubmit = (values, actions) => {
-    console.log(values);
-    console.log(actions);
+    dispatch(register(values));
     actions.resetForm();
   };
 
@@ -37,16 +40,15 @@ const RegistrationPage = () => {
     >
       <Form>
         <FormWrapper>
-          <label htmlFor="username">
+          <label htmlFor="name">
             Username
-            <Field type="text" name="username" />
-            <Error name="username" component="div" />
+            <Field type="text" name="name" />
+            <Error name="name" component="div" />
           </label>
-
-          <label htmlFor="login">
-            Login
-            <Field type="email" name="login" />
-            <Error name="login" component="div" />
+          <label htmlFor="email">
+            Email
+            <Field type="email" name="email" />
+            <Error name="email" component="div" />
           </label>
           <label htmlFor="password">
             Password

@@ -2,14 +2,16 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Error, FormWrapper } from './LoginPageStyled';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { logIn } from 'redux/auth/authOperations';
 
 const schema = yup.object().shape({
   email: yup.string().required().email(),
   password: yup
     .string()
     .required()
-    .min(2, 'Password is too short')
-    .max(8, 'Password is too long'),
+    .min(7, 'Password is too short')
+    .max(16, 'Password is too long'),
 });
 
 const initialValues = {
@@ -18,9 +20,10 @@ const initialValues = {
 };
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+
   const handleSubmit = (values, actions) => {
-    console.log(values);
-    console.log(actions);
+    dispatch(logIn(values));
     actions.resetForm();
   };
 
