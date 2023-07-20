@@ -4,6 +4,7 @@ import ContactList from 'components/ContactList/ContactList';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchContacts } from 'redux/contacts/contactsOperations';
+import { Container } from 'components/SharedLayout/SharedLayoutStyled';
 
 const ContactsPage = () => {
   const dispatch = useDispatch();
@@ -14,9 +15,11 @@ const ContactsPage = () => {
 
   return (
     <>
-      <ContactForms />
-      <Filter />
-      <ContactList />
+      <Container>
+        <ContactForms />
+        <Filter />
+        <ContactList />
+      </Container>
     </>
   );
 };

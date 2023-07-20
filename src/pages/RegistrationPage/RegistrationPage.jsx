@@ -1,9 +1,13 @@
 import React from 'react';
-import { Formik, Form, Field } from 'formik';
-import { Error, FormWrapper } from './RegistrationPageStyled';
+import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { register } from 'redux/auth/authOperations';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { StyledButton } from '../../components/ContactForm/ContactFormStyled';
+import { Error, FormWrapper, Label, Input } from './RegistrationPageStyled';
 
 const schema = yup.object().shape({
   name: yup
@@ -13,9 +17,9 @@ const schema = yup.object().shape({
   email: yup.string().required().email(),
   password: yup
     .string()
-    .required()
     .min(7, 'Password is too short')
-    .max(16, 'Password is too long'),
+    .max(16, 'Password is too long')
+    .required(),
 });
 
 const initialValues = {
@@ -28,7 +32,10 @@ const RegistrationPage = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    dispatch(register(values));
+    dispatch(register(values))
+      .unwrap()
+      .then(() => toast.success('Registration successfully'))
+      .catch(() => toast.error('Something went wrong...Try again.'));
     actions.resetForm();
   };
 
@@ -40,22 +47,22 @@ const RegistrationPage = () => {
     >
       <Form>
         <FormWrapper>
-          <label htmlFor="name">
+          <Label htmlFor="name">
             Username
-            <Field type="text" name="name" />
+            <Input type="text" name="name" />
             <Error name="name" component="div" />
-          </label>
-          <label htmlFor="email">
+          </Label>
+          <Label htmlFor="email">
             Email
-            <Field type="email" name="email" />
+            <Input type="email" name="email" />
             <Error name="email" component="div" />
-          </label>
-          <label htmlFor="password">
+          </Label>
+          <Label htmlFor="password">
             Password
-            <Field type="password" name="password" />
+            <Input type="password" name="password" />
             <Error name="password" component="div" />
-          </label>
-          <button type="submit">Log In</button>
+          </Label>
+          <StyledButton type="submit">Registration</StyledButton>
         </FormWrapper>
       </Form>
     </Formik>

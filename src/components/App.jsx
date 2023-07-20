@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { lazy, useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import SharedLayout from './SharedLayout/SharedLayout';
 import { useDispatch } from 'react-redux';
@@ -29,6 +30,7 @@ export const App = () => {
 
   return (
     <>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />

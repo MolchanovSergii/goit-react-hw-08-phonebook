@@ -4,6 +4,7 @@ export const StyledForm = styled.form`
   border: 1px solid black;
   padding-left: 5px;
   padding-top: 10px;
+  margin-bottom: 15px;
 `;
 
 export const StyledInput = styled.input`

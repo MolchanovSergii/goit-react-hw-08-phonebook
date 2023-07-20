@@ -1,9 +1,18 @@
 import React from 'react';
-import { Formik, Form, Field } from 'formik';
-import { Error, FormWrapper } from './LoginPageStyled';
+import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { logIn } from 'redux/auth/authOperations';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { StyledButton } from '../../components/ContactForm/ContactFormStyled';
+import {
+  Error,
+  FormWrapper,
+  Label,
+  Input,
+} from '../RegistrationPage/RegistrationPageStyled';
 
 const schema = yup.object().shape({
   email: yup.string().required().email(),
@@ -23,7 +32,10 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    dispatch(logIn(values));
+    dispatch(logIn(values))
+      .unwrap()
+      .then(() => toast.success('Log In successfully'))
+      .catch(() => toast.error('Something went wrong...Try again.'));
     actions.resetForm();
   };
 
@@ -35,17 +47,17 @@ const LoginPage = () => {
     >
       <Form>
         <FormWrapper>
-          <label htmlFor="login">
+          <Label htmlFor="login">
             Email
-            <Field type="email" name="email" />
+            <Input type="email" name="email" />
             <Error name="email" component="div" />
-          </label>
-          <label htmlFor="password">
+          </Label>
+          <Label htmlFor="password">
             Password
-            <Field type="password" name="password" />
+            <Input type="password" name="password" />
             <Error name="password" component="div" />
-          </label>
-          <button type="submit">Log In</button>
+          </Label>
+          <StyledButton type="submit">Log In</StyledButton>
         </FormWrapper>
       </Form>
     </Formik>
