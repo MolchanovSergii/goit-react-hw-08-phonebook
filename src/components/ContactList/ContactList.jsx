@@ -30,7 +30,7 @@ const ContactList = () => {
     <>
       {isLoading && <Loader />}
       {error && <p>{error}</p>}
-      {!contactsArray.length > 0 && (
+      {!isLoading && !contactsArray.length > 0 && (
         <div>Oops, your contact list is empty. Add someone</div>
       )}
 
