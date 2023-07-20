@@ -6,6 +6,7 @@ export const handleRejected = (state, action) => {
   state.isLoading = false;
   state.error = action.payload;
 };
+
 export const handleFetchContacts = (state, action) => {
   state.items = action.payload;
   state.isLoading = false;

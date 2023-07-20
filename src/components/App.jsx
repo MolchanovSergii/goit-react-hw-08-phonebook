@@ -2,10 +2,13 @@ import { Route, Routes } from 'react-router-dom';
 import { lazy, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 
+import Loader from './Loader/Loader';
 import SharedLayout from './SharedLayout/SharedLayout';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchCurrentUser } from 'redux/auth/authOperations';
-
+import authSelectors from 'redux/auth/authSelectors';
+import { PrivateRoute } from 'routes/PrivateRoute';
+import { RestrictedRoute } from 'routes/RestrictedRoute';
 // import Home from 'pages/Home/Home';
 // import RegistrationPage from 'pages/RegistrationPage/RegistrationPage';
 // import LoginPage from 'pages/LoginPage/LoginPage';
@@ -23,20 +26,44 @@ const ContactsPage = lazy(() => import('../pages/ContactsPage/ContactsPage'));
 
 export const App = () => {
   const dispatch = useDispatch();
+  const isRefreshing = useSelector(authSelectors.selectIsRefreshing);
 
   useEffect(() => {
     dispatch(fetchCurrentUser());
   }, [dispatch]);
 
-  return (
+  return isRefreshing ? (
+    <Loader />
+  ) : (
     <>
       <ToastContainer />
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
-          <Route path="/register" element={<RegistrationPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/contacts" element={<ContactsPage />} />
+          <Route
+            path="/register"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<RegistrationPage />}
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<LoginPage />}
+              />
+            }
+          />
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
+            }
+          />
         </Route>
       </Routes>
     </>

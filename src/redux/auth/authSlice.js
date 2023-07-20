@@ -4,8 +4,9 @@ import {
   handleLogIn,
   handleLogOut,
   handleFetchCurrentUser,
+  handlePending,
+  handleRejected,
 } from './authReducers';
-import { handlePending, handleRejected } from 'redux/contacts/contactsReducers';
 
 import { register, logIn, logOut, fetchCurrentUser } from './authOperations';
 
@@ -13,6 +14,7 @@ const initialState = {
   user: { name: null, email: null },
   token: null,
   isLoggedIn: false,
+  isRefreshing: false,
 };
 
 const authSlice = createSlice({
@@ -25,8 +27,8 @@ const authSlice = createSlice({
       .addCase(logIn.fulfilled, handleLogIn)
       .addCase(logOut.fulfilled, handleLogOut)
       .addCase(fetchCurrentUser.fulfilled, handleFetchCurrentUser)
-      .addMatcher(action => action.type.endsWith('/rejected'), handleRejected)
-      .addMatcher(action => action.type.endsWith('/pending'), handlePending),
+      .addCase(fetchCurrentUser.pending, handlePending)
+      .addCase(fetchCurrentUser.rejected, handleRejected),
 
   // {
   //   [register.fulfilled](state, action) {

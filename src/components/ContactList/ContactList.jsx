@@ -13,6 +13,10 @@ import {
   Wrapper,
 } from './ContactListStyled';
 
+// toast.configure({
+//   draggable: false,
+// });
+
 const ContactList = () => {
   const contactsList = useSelector(contactsSelector.selectContactsState);
   const { isLoading, error, items } = contactsList;
