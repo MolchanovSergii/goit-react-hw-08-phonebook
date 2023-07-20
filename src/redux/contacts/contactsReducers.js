@@ -24,3 +24,9 @@ export const handleDeleteContact = (state, action) => {
   state.isLoading = false;
   state.error = null;
 };
+
+export const handleLogOut = (state, action) => {
+  state.items = [];
+  state.error = null;
+  state.isLoading = false;
+};
