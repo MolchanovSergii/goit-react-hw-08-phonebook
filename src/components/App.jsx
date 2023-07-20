@@ -9,14 +9,7 @@ import { fetchCurrentUser } from 'redux/auth/authOperations';
 import authSelectors from 'redux/auth/authSelectors';
 import { PrivateRoute } from 'routes/PrivateRoute';
 import { RestrictedRoute } from 'routes/RestrictedRoute';
-// import Home from 'pages/Home/Home';
-// import RegistrationPage from 'pages/RegistrationPage/RegistrationPage';
-// import LoginPage from 'pages/LoginPage/LoginPage';
-// import ContactsPage from 'pages/ContactsPage/ContactsPage';
 
-// const SharedLayout = lazy(() =>
-//   import('../components/SharedLayout/SharedLayout')
-// );
 const Home = lazy(() => import('../pages/Home/Home'));
 const RegistrationPage = lazy(() =>
   import('../pages/RegistrationPage/RegistrationPage')
@@ -36,7 +29,7 @@ export const App = () => {
     <Loader />
   ) : (
     <>
-      <ToastContainer />
+      <ToastContainer draggable={false} />
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />

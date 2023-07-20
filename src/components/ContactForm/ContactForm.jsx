@@ -1,5 +1,8 @@
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { addContact } from 'redux/contacts/contactsOperations';
 import contactsSelector from 'redux/contacts/contactsSelectors';
 
@@ -22,7 +25,7 @@ const ContactForms = () => {
     );
 
     if (isDuplicateName) {
-      alert(`${name} is alredy to contacts`);
+      toast.error(`${name} is alredy to contacts`);
       return;
     }
 
