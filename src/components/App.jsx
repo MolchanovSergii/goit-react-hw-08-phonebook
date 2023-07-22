@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 
 import Loader from './Loader/Loader';
 import SharedLayout from './SharedLayout/SharedLayout';
+import NotFound from 'pages/NotFound/NotFound';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCurrentUser } from 'redux/auth/authOperations';
 import authSelectors from 'redux/auth/authSelectors';
@@ -16,6 +17,7 @@ const RegistrationPage = lazy(() =>
 );
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 const ContactsPage = lazy(() => import('../pages/ContactsPage/ContactsPage'));
+// const NotFound = lazy(() => import('../pages/NotFound/NotFound'));
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -58,6 +60,7 @@ export const App = () => {
             }
           />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
